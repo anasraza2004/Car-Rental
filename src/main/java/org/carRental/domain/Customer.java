@@ -7,6 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @ToString
+
 public class Customer {
     private Integer id;
     private String customer_name;

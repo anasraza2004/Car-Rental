@@ -44,6 +44,8 @@ public class LoginForm {
                 new HomeUI();
             } else {
                 JOptionPane.showMessageDialog(frame,"Incorrect Credentials");
+            userText.setText("");
+            passwordText.setText("");
             }
         });
     }

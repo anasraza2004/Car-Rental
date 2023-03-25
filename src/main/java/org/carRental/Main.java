@@ -2,13 +2,16 @@ package org.carRental;
 
 import org.carRental.UI.BasicUI;
 import org.carRental.UI.LoginForm;
+import org.carRental.dao.BookingDAO;
 import org.carRental.dao.CustomerDAO;
 import org.carRental.dao.OwnerDao;
+import org.carRental.domain.Booking;
 
 public class Main {
     public static void main(String[] args) {
         CustomerDAO customerDAO = new CustomerDAO();
         OwnerDao ownerDao = new OwnerDao();
+        BookingDAO bookingDAO = new BookingDAO();
 
 //                                     Customer post
 //        Customer customer = Customer.builder()
@@ -27,7 +30,7 @@ public class Main {
 //        System.out.println(customerDAO.getById(2));
 
 //                                       Customer delete
-//        customerDAO.delete(7);
+//        customerDAO.delete(4);
 
 //                                      Customer update
 //        Customer customerForUpdate = customerDAO.getById(2);
@@ -58,6 +61,26 @@ public class Main {
 //                                      Owner delete
 //        ownerDao.delete(3);
 //        ownerDao.getAll().forEach(System.out::println);
+//  X========================================================X=========================================================X
+//                                      Booking Post
+//        Booking booking = Booking.builder()
+//                .customer_id(2)
+//                .vehicle_id(3)
+//                .booking_date("2023 | 2 | 14")
+//                .amount(500000)
+//                .build();
+//        bookingDAO.post(booking);
+
+
+//                                  Booking Get ALl
+//        bookingDAO.getAll();
+
+//                                  Booking Get By Id
+//        System.out.println(bookingDAO.getById(2));
+
+
+//                                  Booking Delete
+
 //  X========================================================X=========================================================X
 //                                      Swing
 

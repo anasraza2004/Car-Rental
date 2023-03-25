@@ -8,48 +8,59 @@ public class HomeUI {
     public HomeUI() {
         JFrame frame = new JFrame("Rental Car App | Home");
         frame.setSize(1000, 800);
-        frame.setLayout(new BorderLayout(40, 30));
+        frame.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
 
-        JPanel panelBtns = new JPanel();
-        panelBtns.setLayout(new FlowLayout());
-
         JButton buttonCustomer = new JButton("Customer");
-        buttonCustomer.setBounds(1, 1, 200, 150);
+        ImageIcon imageIcon = new ImageIcon("src/main/resources/customer-icon.png");
+        
+        buttonCustomer.setIcon(imageIcon);
 
         JButton buttonBooking = new JButton("Booking");
-        buttonCustomer.setBounds(1, 1, 200, 150);
-
         JButton buttonOwner = new JButton("Owner");
-        buttonCustomer.setBounds(1, 1, 200, 150);
-
         JButton buttonVehicle = new JButton("Vehicle");
-        buttonCustomer.setBounds(1, 1, 200, 150);
-
         JButton buttonUser = new JButton("User");
-        buttonCustomer.setBounds(1, 1, 200, 150);
-
         JButton buttonLogOut = new JButton("Log out");
-        buttonCustomer.setBounds(1, 1, 200, 150);
 
+        frame.add(buttonCustomer);
+        frame.add(buttonBooking);
+        frame.add(buttonOwner);
+        frame.add(buttonVehicle);
+        frame.add(buttonUser);
+        frame.add(buttonLogOut);
 
-        frame.add(panelBtns, BorderLayout.CENTER);
+        buttonCustomer.addActionListener((event) -> {
+            frame.dispose();
+            new CustomerUI();
+        });
 
-        panelBtns.add(buttonCustomer);
-        panelBtns.add(buttonBooking);
-        panelBtns.add(buttonOwner);
-        panelBtns.add(buttonVehicle);
-        panelBtns.add(buttonUser);
-        panelBtns.add(buttonLogOut);
+        buttonBooking.addActionListener((event) -> {
+            frame.dispose();
+            new BookingUI();
+        });
+
+        buttonOwner.addActionListener((event) -> {
+            frame.dispose();
+            new OwnerUI();
+        });
+
+        buttonVehicle.addActionListener((event) -> {
+            frame.dispose();
+            new VehicleUI();
+        });
+
+        buttonUser.addActionListener((event) -> {
+            frame.dispose();
+            new UserUI();
+        });
 
         buttonLogOut.addActionListener((event) -> {
             frame.dispose();
             new LoginForm();
         });
+
     }
-
-
 }
