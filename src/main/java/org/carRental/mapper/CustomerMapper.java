@@ -30,7 +30,7 @@ public class CustomerMapper implements IMapper<Customer> {
                     .reference_no(resultSet.getString(REF_NO))
                     .build();
             customerList.add(customer);
-            System.out.println(customer);
+//            System.out.println(customer);
         }
         return customerList;
     }
