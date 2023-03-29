@@ -32,14 +32,16 @@ public class CustomerDAO extends BaseDAO implements ICrud<Customer> {
 
     @Override
     public List<Customer> getAll() {
-        try {
-            Statement statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery(GET_ALL);
-            customerMapper.resultToList(rs);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (true) {
+            try {
+                Statement statement = conn.createStatement();
+                ResultSet rs = statement.executeQuery(GET_ALL);
+                return customerMapper.resultToList(rs);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-        return new ArrayList<>();
+        return null;
     }
 
     @Override

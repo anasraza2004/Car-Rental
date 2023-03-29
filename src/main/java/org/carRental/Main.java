@@ -48,7 +48,7 @@ public class Main {
 //        ownerDao.post(ownerPost);
 
 //                                          Owner Get
-//        ownerDao.getAll().forEach(System.out::println);
+//        ownerDao.getAll();
 
 //                                          Owner getById
 //        System.out.println(ownerDao.getById(2));

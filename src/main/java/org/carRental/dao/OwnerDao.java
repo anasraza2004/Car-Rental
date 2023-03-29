@@ -34,11 +34,10 @@ public class OwnerDao extends BaseDAO implements ICrud<Owner> {
         try {
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(GET_ALL_FROM_OWNER);
-            ownerMapper.resultToList(rs);
+            return ownerMapper.resultToList(rs);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return new ArrayList<>();
     }
 
     @Override
@@ -48,6 +47,16 @@ public class OwnerDao extends BaseDAO implements ICrud<Owner> {
             ps.setInt(1, id.intValue());
             ResultSet rs = ps.executeQuery();
             return ownerMapper.resultToObject(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Owner> getByName(String name) {
+        try {
+            PreparedStatement ps = conn.prepareStatement("select * from vehicle_owner where owner_name like '%" + name + "%'");
+            ResultSet rs = ps.executeQuery();
+            return ownerMapper.resultToList(rs);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
