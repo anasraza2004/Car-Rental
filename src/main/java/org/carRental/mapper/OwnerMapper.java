@@ -1,6 +1,5 @@
 package org.carRental.mapper;
 
-import org.carRental.domain.Customer;
 import org.carRental.domain.Owner;
 
 import java.sql.ResultSet;

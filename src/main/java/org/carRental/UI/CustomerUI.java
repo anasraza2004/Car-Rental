@@ -1,6 +1,5 @@
 package org.carRental.UI;
 
-import org.carRental.domain.Customer;
 import org.carRental.services.CustomerService;
 
 import javax.swing.*;
@@ -75,6 +74,11 @@ public class CustomerUI {
         add.addActionListener(e -> {
             frame.dispose();
             new AddCustomerUI();
+        });
+
+        back.addActionListener(e -> {
+            frame.dispose();
+            new HomeUI();
         });
     }
 }
