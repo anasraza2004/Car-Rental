@@ -73,7 +73,7 @@ public class Main {
 
 
 //                                  Booking Get ALl
-//        bookingDAO.getAll();
+//        bookingDAO.getAll().forEach(System.out::println);
 
 //                                  Booking Get By Id
 //        System.out.println(bookingDAO.getById(2));

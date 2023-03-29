@@ -41,7 +41,7 @@ public class CustomerService {
             data[i][3] = customerList.get(i).getAddress();
             data[i][4] = customerList.get(i).getReference_no();
         }
-        System.out.println(data);
+//        System.out.println(data);
         return data;
     }
 }

@@ -1,67 +1,83 @@
 package org.carRental.UI;
 
+import org.carRental.services.BookingService;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class BookingUI {
+    private final BookingService service = new BookingService();
+
     public BookingUI() {
         JFrame frame = new JFrame("Rental Car App | Booking");
-        frame.setSize(1000, 800);
-        frame.setLayout(new BorderLayout(10, 50));
+
+        frame.setSize(1500, 1000);
+        frame.setLayout(new GridLayout(1, 2, 150, 5));
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
+        JPanel tableAndSearchPanel = new JPanel();
+        tableAndSearchPanel.setBackground(Color.GRAY);
+        tableAndSearchPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 
-        JPanel panelSearch = new JPanel();
+        JTextField search = new JTextField(30);
 
-        JTextField searchTF = new JTextField();
-        searchTF.setBounds(0, 20, 500, 10);
+        String[][] data = service.getAllBookngs();
+        String[] headers = {"Customer-id", "Vehicle-id", "Booking-date", "Amount'"};
+        DefaultTableModel dtm = new DefaultTableModel(data, headers);
+        JTable jt = new JTable(dtm);
+        JScrollPane sp = new JScrollPane(jt);
 
-        panelSearch.add(searchTF);
+        tableAndSearchPanel.add(search);
+        tableAndSearchPanel.add(sp);
 
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 
-        JPanel panelBtns = new JPanel();
-        panelBtns.setLayout(new GridLayout(10, 1, 10, 10));
+        JButton add = new JButton("ADD");
+        JButton edit = new JButton("EDIT");
+        JButton delete = new JButton("DELETE");
+        JButton back = new JButton("BACK");
 
-        JButton add_button = new JButton("Add");
-        add_button.setSize(150, 50);
+        buttonsPanel.add(add);
+        buttonsPanel.add(edit);
+        buttonsPanel.add(delete);
+        buttonsPanel.add(back);
 
-        JButton edit_button = new JButton("Edit");
-        edit_button.setSize(150, 50);
-
-        JButton delete_button = new JButton("Delete");
-        delete_button.setSize(150, 50);
-
-        JButton back_button = new JButton("Back");
-        back_button.setSize(150, 50);
-
-        panelBtns.add(add_button);
-        panelBtns.add(edit_button);
-        panelBtns.add(delete_button);
-        panelBtns.add(back_button);
-
-
-        JPanel panelTable = new JPanel();
-
-        String data[][] = {{"101", "Amit", "670000"},
-                {"102", "Jai", "780000"},
-                {"101", "Sachin", "700000"}};
-
-        String column[] = {"ID", "NAME", "SALARY"};
-
-        JTable table = new JTable(data, column);
-        table.setSize(500, 700);
-        panelTable.add(table);
+        frame.add(tableAndSearchPanel);
+        frame.add(buttonsPanel);
 
 
-        frame.add(panelSearch, BorderLayout.NORTH);
-        frame.add(panelBtns, BorderLayout.EAST);
-        frame.add(panelTable, BorderLayout.CENTER);
-
-        back_button.addActionListener(e -> {
+        back.addActionListener(e -> {
             frame.dispose();
             new HomeUI();
         });
+
+        search.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String[][] data = service.searchByDate(search.getText());
+                DefaultTableModel dtm = new DefaultTableModel(data, headers);
+                jt.setModel(dtm);
+            }
+        });
+
+        add.addActionListener(e -> {
+            frame.dispose();
+            new AddBookingUI();
+        });
+
     }
 }

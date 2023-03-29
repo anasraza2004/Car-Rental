@@ -27,7 +27,7 @@ public class BookingMapper implements IMapper<Booking> {
                     .amount(resultSet.getInt(AMOUNT))
                     .build();
             bookingList.add(booking);
-            System.out.println(booking);
+//            System.out.println(booking);
         }
         return bookingList;
     }

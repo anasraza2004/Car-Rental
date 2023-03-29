@@ -4,6 +4,7 @@ import org.carRental.domain.Booking;
 import org.carRental.mapper.BookingMapper;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.carRental.dao.BookingSqlQueryConstant.*;
@@ -34,7 +35,7 @@ public class BookingDAO extends BaseDAO implements ICrud<Booking> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
@@ -44,6 +45,16 @@ public class BookingDAO extends BaseDAO implements ICrud<Booking> {
             ps.setInt(1, id.intValue());
             ResultSet resultSet = ps.executeQuery();
             return mapper.resultToObject(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Booking> getByDate(String date) {
+        try {
+            PreparedStatement ps = conn.prepareStatement("select * from booking where booking_date like '%" + date + "%'");
+            ResultSet resultSet = ps.executeQuery();
+            return mapper.resultToList(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
