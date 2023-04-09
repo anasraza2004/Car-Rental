@@ -68,9 +68,13 @@ public class CustomerDAO extends BaseDAO implements ICrud<Customer> {
     @Override
     public void update(Customer obj, Integer id) {
         try {
-            PreparedStatement ps = conn.prepareStatement(UPDATE_NAME_BY_ID);
+            PreparedStatement ps = conn.prepareStatement(UPDATE_BY_ID);
             ps.setString(1, obj.getCustomer_name());
-            ps.setInt(2, id);
+            ps.setString(2, obj.getPhone_number());
+            ps.setString(3, obj.getCnic());
+            ps.setString(4, obj.getAddress());
+            ps.setString(5, obj.getReference_no());
+            ps.setInt(6, id);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
