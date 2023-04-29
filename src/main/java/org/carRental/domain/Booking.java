@@ -2,7 +2,7 @@ package org.carRental.domain;
 
 import lombok.*;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Data
 @AllArgsConstructor
@@ -14,6 +14,12 @@ public class Booking {
     private Integer id;
     private Integer customer_id;
     private Integer vehicle_id;
-    private String booking_date;
+    private Date booking_date;
+    private String complete_date;
     private Integer amount;
+    private String status;
+    private Integer commission;
+    private String customer_name;
+    private String vehicle_name;
+
 }

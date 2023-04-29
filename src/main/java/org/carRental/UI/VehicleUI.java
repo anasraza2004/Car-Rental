@@ -1,5 +1,6 @@
 package org.carRental.UI;
 
+import org.carRental.dao.VehicleDAO;
 import org.carRental.services.VehicleService;
 
 import javax.swing.*;
@@ -9,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class VehicleUI {
+    private final VehicleDAO dao = new VehicleDAO();
     private final VehicleService service = new VehicleService();
 
     public VehicleUI() {
@@ -27,7 +29,7 @@ public class VehicleUI {
         JTextField search = new JTextField(30);
 
         String data[][] = service.getAll();
-        String column[] = {"Name", "Color", "Price", "Owner Id"};
+        String column[] = {"ID", "Name", "Color", "Price", "Status", "Owner Id"};
         DefaultTableModel dtm = new DefaultTableModel(data, column);
         JTable jt = new JTable(dtm);
         JScrollPane sp = new JScrollPane(jt);
@@ -71,6 +73,31 @@ public class VehicleUI {
         add.addActionListener(e -> {
             frame.dispose();
             new AddVehicleUI();
+        });
+
+        update.addActionListener(e -> {
+            if (jt.getSelectedRow() >= 0) {
+                String id = (String) jt.getValueAt(jt.getSelectedRow(), 0);
+                String name = (String) jt.getValueAt(jt.getSelectedRow(), 1);
+                String color = (String) jt.getValueAt(jt.getSelectedRow(), 2);
+                String price = (String) jt.getValueAt(jt.getSelectedRow(), 3);
+                String status = (String) jt.getValueAt(jt.getSelectedRow(), 4);
+                String ownerID = (String) jt.getValueAt(jt.getSelectedRow(), 5);
+                frame.dispose();
+                new UpdateVehicle(id, name, color, price, status, ownerID);
+            } else {
+                JOptionPane.showMessageDialog(frame, "Please select a field");
+            }
+        });
+
+        delete.addActionListener(e -> {
+            if (jt.getSelectedRow() >= 0) {
+                dao.softDelete(Integer.valueOf((String) jt.getValueAt(jt.getSelectedRow(), 0)));
+                DefaultTableModel dtmdelte = new DefaultTableModel(service.getAll(), column);
+                jt.setModel(dtmdelte);
+            } else {
+                JOptionPane.showMessageDialog(frame, "Please select the row");
+            }
         });
 
         back.addActionListener(e -> {

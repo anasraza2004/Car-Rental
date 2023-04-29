@@ -15,6 +15,8 @@ public class CustomerMapper implements IMapper<Customer> {
     private static final String CNIC = "cnic";
     private static final String ADDRESS = "address";
     private static final String REF_NO = "reference_no";
+    private static final String STATUS = "status";
+
 
     @Override
 
@@ -28,6 +30,7 @@ public class CustomerMapper implements IMapper<Customer> {
                     .cnic(resultSet.getString(CNIC))
                     .address(resultSet.getString(ADDRESS))
                     .reference_no(resultSet.getString(REF_NO))
+                    .status(resultSet.getString(STATUS))
                     .build();
             customerList.add(customer);
 //            System.out.println(customer);
@@ -45,6 +48,7 @@ public class CustomerMapper implements IMapper<Customer> {
                     .cnic(resultSet.getString(CNIC))
                     .address(resultSet.getString(ADDRESS))
                     .reference_no(resultSet.getString(REF_NO))
+                    .status(resultSet.getString(STATUS))
                     .build();
             return customer;
         }

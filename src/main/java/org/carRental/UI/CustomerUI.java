@@ -1,6 +1,8 @@
 package org.carRental.UI;
 
+import org.carRental.dao.CustomerDAO;
 import org.carRental.services.CustomerService;
+import org.carRental.services.PDFGenerator;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -12,6 +14,7 @@ import java.io.IOException;
 
 public class CustomerUI {
     private final CustomerService service = new CustomerService();
+    private final CustomerDAO dao = new CustomerDAO();
 
     public CustomerUI() {
         JFrame frame = new JFrame("Rental Car App | Customer");
@@ -30,7 +33,7 @@ public class CustomerUI {
 
 
         String data[][] = service.getAllCustomer();
-        String column[] = {"ID", "Name", "Phone Number", "CNIC", "Address", "Ref_Phone_No"};
+        String column[] = {"ID", "Name", "Phone Number", "CNIC", "Address", "Ref_Phone_No", "Status"};
 
         DefaultTableModel dtm = new DefaultTableModel(data, column);
         JTable jt = new JTable(dtm);
@@ -88,8 +91,9 @@ public class CustomerUI {
                 String cnic = (String) jt.getValueAt(jt.getSelectedRow(), 3);
                 String address = (String) jt.getValueAt(jt.getSelectedRow(), 4);
                 String refNo = (String) jt.getValueAt(jt.getSelectedRow(), 5);
+                String status = (String) jt.getValueAt(jt.getSelectedRow(), 6);
                 frame.dispose();
-                new UpdateCustomer(id, name, phoneNo, cnic, address, refNo);
+                new UpdateCustomer(id, name, phoneNo, cnic, address, refNo, status);
             } else {
                 JOptionPane.showMessageDialog(frame, "Please select the field");
             }
@@ -97,10 +101,9 @@ public class CustomerUI {
 
         delete.addActionListener(e -> {
             if (jt.getSelectedRow() >= 0) {
-                String id = (String) jt.getValueAt(jt.getSelectedRow(), 0);
-                service.delete(id);
-                DefaultTableModel dtmDelete = new DefaultTableModel(service.getAllCustomer(), column);
-                jt.setModel(dtmDelete);
+                dao.softDelete(Integer.valueOf((String) jt.getValueAt(jt.getSelectedRow(), 0)));
+                DefaultTableModel dtmdelte = new DefaultTableModel(service.getAllCustomer(), column);
+                jt.setModel(dtmdelte);
             } else {
                 JOptionPane.showMessageDialog(frame, "Please select the row");
             }
@@ -108,7 +111,7 @@ public class CustomerUI {
 
         pdf.addActionListener(e -> {
             try {
-                PDFGenerator.generatePDF(jt);
+               new PDFGenerator(jt, "Customer.pdf");
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }

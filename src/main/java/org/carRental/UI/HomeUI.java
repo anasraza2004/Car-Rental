@@ -27,8 +27,8 @@ public class HomeUI {
         JButton buttonVehicle = new JButton("Vehicle");
         addIamgeOnButton(buttonVehicle, "src/main/resources/vehicle-icon.png", 100, 100);
 
-        JButton buttonUser = new JButton("User");
-        addIamgeOnButton(buttonUser, "src/main/resources/user-icon.png", 100, 100);
+        JButton buttonreports = new JButton("Reports");
+        addIamgeOnButton(buttonreports, "src/main/resources/reports-icon.png", 100, 100);
 
         JButton buttonLogOut = new JButton("Log out");
         addIamgeOnButton(buttonLogOut, "src/main/resources/logout-icon.png", 100, 100);
@@ -37,7 +37,7 @@ public class HomeUI {
         frame.add(buttonBooking);
         frame.add(buttonOwner);
         frame.add(buttonVehicle);
-        frame.add(buttonUser);
+        frame.add(buttonreports);
         frame.add(buttonLogOut);
 
         buttonCustomer.addActionListener((event) -> {
@@ -60,9 +60,9 @@ public class HomeUI {
             new VehicleUI();
         });
 
-        buttonUser.addActionListener((event) -> {
+        buttonreports.addActionListener((event) -> {
             frame.dispose();
-            new UserUI();
+            new ReportsUI();
         });
 
         buttonLogOut.addActionListener((event) -> {

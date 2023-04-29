@@ -1,4 +1,4 @@
-package org.carRental.UI;
+package org.carRental.services;
 
 import java.io.FileOutputStream;
 
@@ -13,10 +13,10 @@ import javax.swing.JTable;
 
 public class PDFGenerator {
 
-    public static void generatePDF(JTable jTable) throws Exception {
+    public PDFGenerator(JTable jTable, String pdfName) throws Exception {
         Document document = new Document(PageSize.A4.rotate());
 
-        PdfWriter.getInstance(document, new FileOutputStream("Customer.pdf"));
+        PdfWriter.getInstance(document, new FileOutputStream(pdfName));
         document.open();
 
         PdfPTable table = new PdfPTable(jTable.getColumnCount());

@@ -6,4 +6,5 @@ public class VehicleSqlQueryConstant {
     public final static String GET_BY_ID = "select * from vehicle where id = ?";
     public final static String UPDATE_BY_ID = "update vehicle set vehicle_name = ? where id = ?";
     public final static String DELETE = "delete from vehicle where id = ?";
+    public final static String SOFT_DELETE = "update vehicle set status = 'Inactive' where id = ?";
 }

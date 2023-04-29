@@ -14,4 +14,5 @@ public class Customer {
     private String cnic;
     private String address;
     private String reference_no;
+    private String status;
 }

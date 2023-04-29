@@ -23,21 +23,22 @@ public class CustomerService {
 
     public String[][] getAllCustomer() {
         List<Customer> customerList = dao.getAll();
-        return convertListTo2DArray(customerList, 6);
+        return convertListTo2DArray(customerList, 7);
     }
 
     public String[][] searchByName(String name) {
         List<Customer> customerList = dao.getByName(name);
-        return convertListTo2DArray(customerList, 6);
+        return convertListTo2DArray(customerList, 7);
     }
 
-    public void updateCustomer(String id, String name, String phoneNo, String cnic, String address, String refNo) {
+    public void updateCustomer(String id, String name, String phoneNo, String cnic, String address, String refNo, String status) {
         Customer customer = Customer.builder()
                 .customer_name(name)
                 .phone_number(phoneNo)
                 .cnic(cnic)
                 .address(address)
                 .reference_no(refNo)
+                .status(status)
                 .build();
 
         dao.update(customer, Integer.valueOf(id));
@@ -56,6 +57,7 @@ public class CustomerService {
             data[i][3] = customerList.get(i).getCnic();
             data[i][4] = customerList.get(i).getAddress();
             data[i][5] = customerList.get(i).getReference_no();
+            data[i][6] = customerList.get(i).getStatus();
         }
         return data;
     }

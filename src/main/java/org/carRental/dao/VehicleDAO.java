@@ -61,6 +61,16 @@ public class VehicleDAO extends BaseDAO implements ICrud<Vehicle> {
         }
     }
 
+    public void softDelete(Integer id) {
+        try {
+            PreparedStatement ps = conn.prepareStatement(SOFT_DELETE);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public void update(Vehicle obj, Integer id) {
         try {

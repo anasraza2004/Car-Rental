@@ -74,13 +74,23 @@ public class CustomerDAO extends BaseDAO implements ICrud<Customer> {
             ps.setString(3, obj.getCnic());
             ps.setString(4, obj.getAddress());
             ps.setString(5, obj.getReference_no());
-            ps.setInt(6, id);
+            ps.setString(6, obj.getStatus());
+            ps.setInt(7, id);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
+    public void softDelete(Integer id) {
+        try {
+            PreparedStatement ps = conn.prepareStatement(SOFT_DELETE);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Override
     public void delete(Integer id) {

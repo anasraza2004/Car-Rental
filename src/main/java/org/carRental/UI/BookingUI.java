@@ -1,5 +1,6 @@
 package org.carRental.UI;
 
+import org.carRental.dao.BookingDAO;
 import org.carRental.services.BookingService;
 
 import javax.swing.*;
@@ -7,8 +8,10 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.sql.Date;
 
 public class BookingUI {
+    private final BookingDAO dao = new BookingDAO();
     private final BookingService service = new BookingService();
 
     public BookingUI() {
@@ -26,8 +29,8 @@ public class BookingUI {
 
         JTextField search = new JTextField(30);
 
-        String[][] data = service.getAllBookngs();
-        String[] headers = {"Customer-id", "Vehicle-id", "Booking-date", "Amount'"};
+        String[][] data = service.getAllBookings();
+        String[] headers = {"Id", "Customer", "Vehicle", "Booking-date", "Complete-date", "Amount", "Status"};
         DefaultTableModel dtm = new DefaultTableModel(data, headers);
         JTable jt = new JTable(dtm);
         JScrollPane sp = new JScrollPane(jt);
@@ -40,22 +43,18 @@ public class BookingUI {
 
         JButton add = new JButton("ADD");
         JButton edit = new JButton("EDIT");
+        JButton complete = new JButton("COMPLETE BOOKING");
         JButton delete = new JButton("DELETE");
         JButton back = new JButton("BACK");
 
         buttonsPanel.add(add);
         buttonsPanel.add(edit);
+        buttonsPanel.add(complete);
         buttonsPanel.add(delete);
         buttonsPanel.add(back);
 
         frame.add(tableAndSearchPanel);
         frame.add(buttonsPanel);
-
-
-        back.addActionListener(e -> {
-            frame.dispose();
-            new HomeUI();
-        });
 
         search.addKeyListener(new KeyListener() {
             @Override
@@ -79,5 +78,45 @@ public class BookingUI {
             new AddBookingUI();
         });
 
+        edit.addActionListener(e -> {
+            if (jt.getSelectedRow() >= 0) {
+                String id = (String) jt.getValueAt(jt.getSelectedRow(), 0);
+                String cusId = (String) jt.getValueAt(jt.getSelectedRow(), 1);
+                String vehId = (String) jt.getValueAt(jt.getSelectedRow(), 2);
+                String date = (String) jt.getValueAt(jt.getSelectedRow(), 3);
+                String amount = (String) jt.getValueAt(jt.getSelectedRow(), 4);
+                String status = (String) jt.getValueAt(jt.getSelectedRow(), 5);
+                frame.dispose();
+                new UpdateBooking(id, cusId, vehId, Date.valueOf(date), amount, status);
+            } else {
+                JOptionPane.showMessageDialog(frame, "Please select the field");
+            }
+        });
+
+        complete.addActionListener(e -> {
+            if (jt.getSelectedRow() >= 0) {
+                String id = String.valueOf(jt.getValueAt(jt.getSelectedRow(), 0));
+                frame.dispose();
+                new CompleteBookingDate(id);
+            } else {
+                JOptionPane.showMessageDialog(frame, "Please select a field");
+            }
+        });
+
+        delete.addActionListener(e -> {
+            if (jt.getSelectedRow() >= 0) {
+                String id = String.valueOf(jt.getValueAt(jt.getSelectedRow(), 0));
+                dao.softDelete(id);
+                DefaultTableModel tableDelte = new DefaultTableModel(service.getAllBookings(), headers);
+                jt.setModel(tableDelte);
+            } else {
+                JOptionPane.showMessageDialog(frame, "Please select a field");
+            }
+        });
+
+        back.addActionListener(e -> {
+            frame.dispose();
+            new HomeUI();
+        });
     }
 }

@@ -1,29 +1,37 @@
 package org.carRental.UI;
 
+import com.toedter.calendar.JCalendar;
 import org.carRental.services.BookingService;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
+import javax.swing.text.DateFormatter;
 import java.awt.*;
+import java.util.Properties;
 
 public class AddBookingUI {
-    BookingService service = new BookingService();
+    private final BookingService service = new BookingService();
 
     public AddBookingUI() {
-        JFrame frame = new JFrame("Rental Car App | Add Customer");
-        frame.setLayout(new GridLayout(6, 2, 10, 10));
-        frame.setSize(500, 300);
+        JFrame frame = new JFrame("Rental Car App | Add Booking");
+        frame.setLayout(new GridLayout(6, 2, 10, 30));
+        frame.setSize(500, 700);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
-        JLabel customerId = new JLabel("Customer ID");
-        JTextField customerIdTf = new JTextField(20);
+        JLabel customerIdLbl = new JLabel("Customer");
+        String[] customerIdOptions = service.getCustomer();
+        JComboBox<String> dropdownCustomerId = new JComboBox<>(customerIdOptions);
 
-        JLabel vehicleId = new JLabel("Vehicle ID");
-        JTextField vehicleIdTf = new JTextField(20);
+        JLabel vehicleIdLbl = new JLabel("Vehicle ID");
+        String[] vehicleIdOptions = service.getVehicle();
+        JComboBox<String> dropdownvehicleId = new JComboBox<>(vehicleIdOptions);
 
-        JLabel date = new JLabel("Booking date");
-        JTextField dateTf = new JTextField(20);
+        JLabel date = new JLabel("Date");
+        JCalendar datePicker = new JCalendar();
 
         JLabel amount = new JLabel("Amount");
         JTextField amountTf = new JTextField(20);
@@ -31,12 +39,12 @@ public class AddBookingUI {
         JButton back = new JButton("BACK");
         JButton save = new JButton("SAVE");
 
-        frame.add(customerId);
-        frame.add(customerIdTf);
-        frame.add(vehicleId);
-        frame.add(vehicleIdTf);
+        frame.add(customerIdLbl);
+        frame.add(dropdownCustomerId);
+        frame.add(vehicleIdLbl);
+        frame.add(dropdownvehicleId);
         frame.add(date);
-        frame.add(dateTf);
+        frame.add(datePicker);
         frame.add(amount);
         frame.add(amountTf);
         frame.add(save);
@@ -49,7 +57,15 @@ public class AddBookingUI {
         });
 
         save.addActionListener(e -> {
-            service.add(customerIdTf.getText(), vehicleIdTf.getText(), dateTf.getText(), amountTf.getText());
+            String inputVehicle = (String) dropdownvehicleId.getSelectedItem();
+            String[] partsVehicle = inputVehicle.split(",");
+            Integer vehicleId = Integer.valueOf(partsVehicle[0]);
+
+            String inputCustomer = (String) dropdownCustomerId.getSelectedItem();
+            String[] partsCustomer = inputCustomer.split(",");
+            Integer customerId = Integer.valueOf(partsCustomer[0]);
+
+            service.add(customerId, vehicleId, datePicker.getDate(), amountTf.getText());
             frame.dispose();
             new BookingUI();
         });

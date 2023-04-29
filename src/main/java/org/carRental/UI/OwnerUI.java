@@ -1,12 +1,15 @@
 package org.carRental.UI;
 
 import org.carRental.services.OwnerService;
+import org.carRental.services.PDFGenerator;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.IOException;
 
 public class OwnerUI {
     OwnerService service = new OwnerService();
@@ -43,11 +46,13 @@ public class OwnerUI {
         JButton add = new JButton("ADD");
         JButton update = new JButton("UPDATE");
         JButton delete = new JButton("DELETE");
+        JButton pdf = new JButton("GENERATE PDF");
         JButton back = new JButton("BACK");
 
         buttonsPanel.add(add);
         buttonsPanel.add(update);
         buttonsPanel.add(delete);
+        buttonsPanel.add(pdf);
         buttonsPanel.add(back);
 
         frame.add(tableAndSearchPanel);
@@ -74,6 +79,21 @@ public class OwnerUI {
             frame.dispose();
             new AddOwnerUI();
         });
+
+        pdf.addActionListener(e -> {
+            try {
+                new PDFGenerator(jt, "Owner.pdf");
+                File file = new File("Owner.pdf");
+                if (file.exists()) {
+                    Desktop.getDesktop().open(file);
+                } else {
+                    System.out.println("File Not Found");
+                }
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
         back.addActionListener(e -> {
             frame.dispose();
             new HomeUI();
