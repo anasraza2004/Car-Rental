@@ -62,4 +62,15 @@ public class VehicleMapper implements IMapper<Vehicle> {
         }
         return vehicleList;
     }
+
+    public List<Vehicle> resultToListForMostBookedCars(ResultSet resultSet) throws SQLException {
+        List<Vehicle> vehicleList = new ArrayList<>();
+        while (resultSet.next()) {
+            Vehicle vehicle = Vehicle.builder()
+                    .vehicle_name(resultSet.getString(VEHICLE_NAME))
+                    .build();
+            vehicleList.add(vehicle);
+        }
+        return vehicleList;
+    }
 }

@@ -21,5 +21,7 @@ public class Booking {
     private Integer commission;
     private String customer_name;
     private String vehicle_name;
+    private Integer total_days;
+    private Integer total_amount;
 
 }

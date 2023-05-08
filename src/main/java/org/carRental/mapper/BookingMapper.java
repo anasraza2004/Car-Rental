@@ -34,6 +34,27 @@ public class BookingMapper implements IMapper<Booking> {
                     .status(resultSet.getString(STATUS))
                     .customer_name(resultSet.getString(CUSTOMER_NAME))
                     .vehicle_name(resultSet.getString(VEHICLE_NAME))
+                    .total_amount(resultSet.getInt("total_amount"))
+                    .total_days(resultSet.getInt("total_days"))
+                    .build();
+            bookingList.add(booking);
+        }
+        return bookingList;
+    }
+
+    public List<Booking> resultToListBooking(ResultSet resultSet) throws SQLException {
+        List<Booking> bookingList = new ArrayList<>();
+        while (resultSet.next()) {
+            Booking booking = Booking.builder()
+                    .id(resultSet.getInt(ID))
+                    .customer_id(resultSet.getInt(CUSTOMER_ID))
+                    .vehicle_id(resultSet.getInt(VEHICLE_ID))
+                    .booking_date(resultSet.getDate(BOOKING_DATE))
+                    .complete_date(resultSet.getString(COMPLETE_DATE))
+                    .amount(resultSet.getInt(AMOUNT))
+                    .status(resultSet.getString(STATUS))
+                    .customer_name(resultSet.getString(CUSTOMER_NAME))
+                    .vehicle_name(resultSet.getString(VEHICLE_NAME))
                     .build();
             bookingList.add(booking);
         }

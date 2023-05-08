@@ -4,14 +4,12 @@ import com.toedter.calendar.JCalendar;
 import org.carRental.dao.BookingDAO;
 import org.carRental.domain.Booking;
 import org.carRental.services.PDFForMonthlyReport;
-import org.carRental.services.PDFGenerator;
 import org.carRental.services.ReportService;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 public class MonthlyReport {
@@ -30,7 +28,7 @@ public class MonthlyReport {
         JPanel tablePanel = new JPanel();
 
         String[][] rows = {};
-        String[] headers = {"Id", "Customer", "Vehicle", "Booking-date", "Complete-date", "Amount", "Status"};
+        String[] headers = {"Id", "Customer", "Vehicle", "Booking-date", "Complete-date", "Amount-per-day", "Total-days", "Total-Amount", "Status"};
         DefaultTableModel dtm = new DefaultTableModel(rows, headers);
         JTable jt = new JTable(dtm);
         JScrollPane sp = new JScrollPane(jt);
@@ -60,7 +58,7 @@ public class MonthlyReport {
             Integer profit = service.totalProfit(startDate.getDate(), endDate.getDate());
             List<Booking> commission = dao.totalCommission(startDate.getDate(), endDate.getDate());
             try {
-                new PDFForMonthlyReport(jt, "Monthly-Report.pdf", profit, commission);
+                new PDFForMonthlyReport("Monthly Report", jt, "Monthly-Report.pdf", profit, commission, startDate.getDate(), endDate.getDate());
                 File file = new File("Monthly-Report.pdf");
                 if (file.exists()) {
                     Desktop.getDesktop().open(file);

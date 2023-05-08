@@ -65,9 +65,18 @@ public class AddBookingUI {
             String[] partsCustomer = inputCustomer.split(",");
             Integer customerId = Integer.valueOf(partsCustomer[0]);
 
-            service.add(customerId, vehicleId, datePicker.getDate(), amountTf.getText());
-            frame.dispose();
-            new BookingUI();
+            Boolean flag = true;
+            if (Integer.valueOf(amountTf.getText()) < 0) {
+                JOptionPane.showMessageDialog(frame, "Amount can not be negative = '" + amountTf.getText() + "'");
+                flag = false;
+                amountTf.setText("");
+            } else {
+            }
+            if (flag) {
+                service.add(customerId, vehicleId, datePicker.getDate(), Integer.valueOf(amountTf.getText()));
+                frame.dispose();
+                new BookingUI();
+            }
         });
     }
 }

@@ -1,9 +1,7 @@
 package org.carRental.UI;
 
-import org.carRental.dao.ReportsDAO;
 import org.carRental.services.PDFGenerator;
 import org.carRental.services.ReportService;
-import sun.security.krb5.internal.crypto.Des;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -26,12 +24,14 @@ public class ReportsUI {
         JButton commisionRep = new JButton("Commision Report");
         JButton carAvaRep = new JButton("Car Availability Report");
         JButton analyticsRep = new JButton("Analytics Report");
+        JButton yearlyRep = new JButton("Yearly Report");
         JButton back = new JButton("Back");
 
         frame.add(monthlyRep);
         frame.add(commisionRep);
         frame.add(carAvaRep);
         frame.add(analyticsRep);
+        frame.add(yearlyRep);
         frame.add(back);
 
         monthlyRep.addActionListener(e -> {
@@ -51,8 +51,8 @@ public class ReportsUI {
             DefaultTableModel tableModel = new DefaultTableModel(data, headers);
             jt.setModel(tableModel);
             try {
-                new PDFGenerator(jt, "Car Availability.pdf");
-                File file = new File("Car Availability.pdf");
+                new PDFGenerator("Car Availability Report", jt, "Availability.pdf");
+                File file = new File("Availability.pdf");
                 if (file.exists()) {
                     Desktop.getDesktop().open(file);
                 } else {
@@ -66,6 +66,11 @@ public class ReportsUI {
         analyticsRep.addActionListener(e -> {
             frame.dispose();
             new AnalyticsReport();
+        });
+
+        yearlyRep.addActionListener(e -> {
+            frame.dispose();
+            new YearlyReport();
         });
 
         back.addActionListener(e -> {

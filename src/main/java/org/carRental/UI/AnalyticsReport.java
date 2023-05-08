@@ -2,12 +2,17 @@ package org.carRental.UI;
 
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
+import org.carRental.services.PDFGenerator;
+import org.carRental.services.ReportService;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.io.File;
 
 public class AnalyticsReport {
+    private final ReportService reportService = new ReportService();
+
     public AnalyticsReport() {
         JFrame frame = new JFrame("Rental Car App | Monthly Report");
 
@@ -44,7 +49,20 @@ public class AnalyticsReport {
         frame.add(tablePanel);
 
         done.addActionListener(e -> {
-
+            String[][] data = reportService.analyticsRep(startDate.getDate(), endDate.getDate());
+            DefaultTableModel tableModel = new DefaultTableModel(data, headers);
+            jt.setModel(tableModel);
+            try {
+                new PDFGenerator("Analytics Report", jt, "Analytics.pdf", startDate.getDate(), endDate.getDate());
+                File file = new File("Analytics.pdf");
+                if (file.exists()) {
+                    Desktop.getDesktop().open(file);
+                } else {
+                    JOptionPane.showMessageDialog(frame, "PDF not found");
+                }
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
         });
 
         back.addActionListener(e -> {

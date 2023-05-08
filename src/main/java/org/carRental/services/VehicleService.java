@@ -1,12 +1,15 @@
 package org.carRental.services;
 
+import org.carRental.dao.OwnerDao;
 import org.carRental.dao.VehicleDAO;
+import org.carRental.domain.Owner;
 import org.carRental.domain.Vehicle;
 
 import java.util.List;
 
 public class VehicleService {
     private final VehicleDAO dao = new VehicleDAO();
+    private final OwnerDao ownerDao = new OwnerDao();
 
     public void add(String name, String color, String price, String ownerId) {
         Vehicle vehicle = Vehicle.builder()
@@ -28,7 +31,7 @@ public class VehicleService {
         return convertListTo2dArray(vehicleList, 6);
     }
 
-    public void update(String id,String name, String color, String price, String status, String ownerID) {
+    public void update(String id, String name, String color, String price, String status, String ownerID) {
         Vehicle vehicle = Vehicle.builder()
                 .vehicle_name(name)
                 .vehicle_color(color)
@@ -37,6 +40,16 @@ public class VehicleService {
                 .owner_id(Integer.valueOf(ownerID))
                 .build();
         dao.update(vehicle, Integer.valueOf(id));
+    }
+
+    public String[] getAllOwners() {
+        List<Owner> ownerList = ownerDao.getAll();
+        String[] owners = new String[ownerList.size()];
+        for (int i = 0; i < ownerList.size(); i++) {
+            owners[i] = String.valueOf(ownerList.get(i).getId());
+            owners[i] += ", " + ownerList.get(i).getOwner_name();
+        }
+        return owners;
     }
 
     private static String[][] convertListTo2dArray(List<Vehicle> vehicleList, Integer columnSize) {

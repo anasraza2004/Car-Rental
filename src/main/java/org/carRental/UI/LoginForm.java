@@ -48,5 +48,34 @@ public class LoginForm {
                 passwordText.setText("");
             }
         });
+
+        userText.addActionListener(e -> {
+            if (userText.getText() != null || passwordText.getText() != null) {
+                if (authenticationService.checkResult(userText.getText(), passwordText.getText())) {
+                    frame.dispose();
+                    new HomeUI();
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Incorrect Credentials");
+                    userText.setText("");
+                    passwordText.setText("");
+                }
+            } else {
+                JOptionPane.showMessageDialog(frame, "Enter all Credentials");
+            }
+        });
+        passwordText.addActionListener(e -> {
+            if (userText.getText() != null || passwordText.getText() != null) {
+                if (authenticationService.checkResult(userText.getText(), passwordText.getText())) {
+                    frame.dispose();
+                    new HomeUI();
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Incorrect Credentials");
+                    userText.setText("");
+                    passwordText.setText("");
+                }
+            } else {
+                JOptionPane.showMessageDialog(frame, "Enter all Credentials");
+            }
+        });
     }
 }

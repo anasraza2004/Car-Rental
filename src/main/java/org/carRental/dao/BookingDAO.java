@@ -31,14 +31,20 @@ public class BookingDAO extends BaseDAO implements ICrud<Booking> {
         }
     }
 
-//    public void updateVehicleStatus(Integer vehicleId) {
-//        PreparedStatement statement= conn.prepareStatement();
-//    }
+    public void updateVehicleStatusAdd(Integer id) {
+        try {
+            PreparedStatement statement = conn.prepareStatement(UPDATE_VEHICLE_STATUS_AFTER_ADD);
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public List<Vehicle> getAllVehicles() {
         try {
             Statement statement = conn.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from vehicle where status= 'Active'");
+            ResultSet resultSet = statement.executeQuery("select * from vehicle where status!= 'Inactive'");
             return vehicleMapper.resultToList(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -60,7 +66,7 @@ public class BookingDAO extends BaseDAO implements ICrud<Booking> {
         try {
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(GET_ALL);
-            return mapper.resultToList(resultSet);
+            return mapper.resultToListBooking(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -71,6 +77,16 @@ public class BookingDAO extends BaseDAO implements ICrud<Booking> {
             PreparedStatement statement = conn.prepareStatement(COMPLETE_BOOKING);
             statement.setDate(1, new java.sql.Date(date.getTime()));
             statement.setString(2, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateVehicleStatusComplete(Integer id) {
+        try {
+            PreparedStatement statement = conn.prepareStatement(UPDATE_VEHICLE_STATUS_AFTER_COMPLETE);
+            statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

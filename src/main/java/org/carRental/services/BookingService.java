@@ -11,14 +11,16 @@ import java.util.List;
 public class BookingService {
     private final BookingDAO dao = new BookingDAO();
 
-    public void add(Integer customerId, Integer vehicleId, Date bookingDate, String amount) {
+    public void add(Integer customerId, Integer vehicleId, Date bookingDate, Integer amount) {
         Booking booking = Booking.builder()
                 .customer_id(customerId)
                 .vehicle_id(vehicleId)
                 .booking_date(new java.sql.Date(bookingDate.getTime()))
-                .amount(Integer.valueOf(amount))
+                .amount(amount)
                 .build();
         dao.post(booking);
+        System.out.println(vehicleId);
+        dao.updateVehicleStatusAdd(vehicleId);
     }
 
     public String[] getVehicle() {
@@ -49,6 +51,11 @@ public class BookingService {
     public String[][] searchByDate(String date) {
         List<Booking> bookingList = dao.getByDate(date);
         return convertListTo2DArray(bookingList, 7);
+    }
+
+    public void completeBooking(String id, Date completeDate, Integer vehicleId) {
+        dao.completeBooking(id, completeDate);
+        dao.updateVehicleStatusComplete(vehicleId);
     }
 
     private String[][] convertListTo2DArray(List<Booking> bookingList, Integer columnSize) {

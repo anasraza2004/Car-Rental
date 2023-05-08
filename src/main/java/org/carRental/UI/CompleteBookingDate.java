@@ -2,15 +2,15 @@ package org.carRental.UI;
 
 import com.toedter.calendar.JCalendar;
 import org.carRental.dao.BookingDAO;
+import org.carRental.services.BookingService;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.print.Book;
 
 public class CompleteBookingDate {
-    BookingDAO dao = new BookingDAO();
+    private final BookingService bookingService = new BookingService();
 
-    public CompleteBookingDate(String id) {
+    public CompleteBookingDate(String id, Integer vehicleId) {
 
         JFrame frame = new JFrame("Rental Car App | Complete Booking");
         frame.setSize(500, 500);
@@ -38,7 +38,7 @@ public class CompleteBookingDate {
         frame.add(buttonsPanel);
 
         done.addActionListener(e -> {
-            dao.completeBooking(id, completionDate.getDate());
+            bookingService.completeBooking(id, completionDate.getDate(), vehicleId);
             frame.dispose();
             new BookingUI();
         });

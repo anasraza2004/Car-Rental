@@ -111,7 +111,7 @@ public class CustomerUI {
 
         pdf.addActionListener(e -> {
             try {
-               new PDFGenerator(jt, "Customer.pdf");
+                new PDFGenerator("Customer", jt, "Customer.pdf");
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }

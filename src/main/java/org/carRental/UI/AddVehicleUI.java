@@ -1,5 +1,6 @@
 package org.carRental.UI;
 
+import org.carRental.services.OwnerService;
 import org.carRental.services.VehicleService;
 
 import javax.swing.*;
@@ -26,7 +27,8 @@ public class AddVehicleUI {
         JTextField priceTf = new JTextField(20);
 
         JLabel ownerId = new JLabel("Owner ID");
-        JTextField ownerIdTf = new JTextField(20);
+        String[] ownerOptions = service.getAllOwners();
+        JComboBox<String> dropdownOwner = new JComboBox<>(ownerOptions);
 
         JButton back = new JButton("BACK");
         JButton save = new JButton("SAVE");
@@ -38,12 +40,12 @@ public class AddVehicleUI {
         frame.add(price);
         frame.add(priceTf);
         frame.add(ownerId);
-        frame.add(ownerIdTf);
+        frame.add(dropdownOwner);
         frame.add(save);
         frame.add(back);
 
         save.addActionListener(e -> {
-            service.add(nameTf.getText(), colorTf.getText(), priceTf.getText(), ownerIdTf.getText());
+            service.add(nameTf.getText(), colorTf.getText(), priceTf.getText(), String.valueOf(dropdownOwner.getSelectedItem()));
             frame.dispose();
             new VehicleUI();
         });

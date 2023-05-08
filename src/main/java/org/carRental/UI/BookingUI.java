@@ -96,8 +96,12 @@ public class BookingUI {
         complete.addActionListener(e -> {
             if (jt.getSelectedRow() >= 0) {
                 String id = String.valueOf(jt.getValueAt(jt.getSelectedRow(), 0));
+
+                String vehId = (String) jt.getValueAt(jt.getSelectedRow(), 2);
+                String[] partsVehicle = vehId.split(",");
+                Integer vehicleId = Integer.valueOf(partsVehicle[0]);
                 frame.dispose();
-                new CompleteBookingDate(id);
+                new CompleteBookingDate(id, vehicleId);
             } else {
                 JOptionPane.showMessageDialog(frame, "Please select a field");
             }

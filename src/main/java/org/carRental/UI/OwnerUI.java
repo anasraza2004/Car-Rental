@@ -82,7 +82,7 @@ public class OwnerUI {
 
         pdf.addActionListener(e -> {
             try {
-                new PDFGenerator(jt, "Owner.pdf");
+                new PDFGenerator("Owner", jt, "Owner.pdf");
                 File file = new File("Owner.pdf");
                 if (file.exists()) {
                     Desktop.getDesktop().open(file);
